@@ -78,53 +78,53 @@ st.markdown("""
 content_data = {
     labels[0]: {
         'images': [
-            "https://via.placeholder.com/300?text=Label1_Image1",
-            "https://via.placeholder.com/300?text=Label1_Image2",
-            "https://via.placeholder.com/300?text=Label1_Image3"
+            "https://ibb.co/dtF6YTm",
+            "https://ibb.co/0VWqcm0",
+            "https://ibb.co/vLVHmLV"
         ],
         'videos': [
-            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ"
+            "https://youtu.be/EjrNbUjBdVE?si=UO8P_OIxtLBiKqnH",
+            "https://youtu.be/mcbKTiUAkdc?si=JqSvglGhe4qBlbZq",
+            "https://youtu.be/6TB7MdZM2uE?si=USPS8fp2Uqoxp8Pb"
         ],
         'texts': [
-            "Label 1 관련 첫 번째 텍스트 내용입니다.",
-            "Label 1 관련 두 번째 텍스트 내용입니다.",
-            "Label 1 관련 세 번째 텍스트 내용입니다."
+            "경기 잘함.",
+            "잘생김",
+            "어리다"
         ]
     },
     labels[1]: {
         'images': [
-            "https://via.placeholder.com/300?text=Label2_Image1",
-            "https://via.placeholder.com/300?text=Label2_Image2",
-            "https://via.placeholder.com/300?text=Label2_Image3"
+            "https://ibb.co/RYsr7qJ",
+            "https://ibb.co/Tb33N3C",
+            "https://ibb.co/QYJ2DN6"
         ],
         'videos': [
-            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-            "https://www.youtube.com/watch?v=2Vv-BfVoq4g"
+            "https://youtu.be/K-LL7bmheS4?si=5_4QFo2i7uy2CZBY",
+            "https://youtu.be/hkH1tFODUDA?si=snRM88-P8l9xfMw-",
+            "https://youtu.be/NdjCIgLAMZE?si=I0tb42Nnv21oU6Up"
         ],
         'texts': [
-            "Label 2 관련 첫 번째 텍스트 내용입니다.",
-            "Label 2 관련 두 번째 텍스트 내용입니다.",
-            "Label 2 관련 세 번째 텍스트 내용입니다."
+            "귀여움.",
+            "좌완 투수.",
+            "강속구."
         ]
     },
     labels[2]: {
         'images': [
-            "https://via.placeholder.com/300?text=Label3_Image1",
-            "https://via.placeholder.com/300?text=Label3_Image2",
-            "https://via.placeholder.com/300?text=Label3_Image3"
+            "https://ibb.co/BnSFT3n",
+            "https://ibb.co/k8dsdrC",
+            "https://ibb.co/4jMcFPp"
         ],
         'videos': [
-            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
-            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
-            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ"
+            "https://youtu.be/wBkl8l2fNfo?si=MPMMdhDADwdiHbpk",
+            "https://youtu.be/tEncTHM34lw?si=vF_QrighCa3iAHtK",
+            "https://youtu.be/K8_cbyQPf9U?si=cyTvXi_7B1meoeaE"
         ],
         'texts': [
-            "Label 3 관련 첫 번째 텍스트 내용입니다.",
-            "Label 3 관련 두 번째 텍스트 내용입니다.",
-            "Label 3 관련 세 번째 텍스트 내용입니다."
+            "쿼카닮음.",
+            "탈삼진.",
+            "키큼."
         ]
     }
 }
