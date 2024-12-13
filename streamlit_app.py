@@ -78,9 +78,9 @@ st.markdown("""
 content_data = {
     labels[0]: {
         'images': [
-            "<a href="https://ibb.co/dtF6YTm"><img src="https://i.ibb.co/QkLnwgD/2.jpg" alt="2" border="0"></a>",
-            "<a href="https://ibb.co/0VWqcm0"><img src="https://i.ibb.co/1JpZL7C/3.jpg" alt="3" border="0"></a>",
-            "<a href="https://imgbb.com/"><img src="https://i.ibb.co/CVmzvVm/1.jpg" alt="1" border="0"></a>"
+            "https://i.ibb.co/2cxnPy3/image.jpg",
+            "https://i.ibb.co/S71NP5k/3.jpg",
+            "https://i.ibb.co/2cxnPy3/image.jpg"
         ],
         'videos': [
             "https://youtu.be/EjrNbUjBdVE?si=UO8P_OIxtLBiKqnH",
@@ -95,9 +95,9 @@ content_data = {
     },
     labels[1]: {
         'images': [
-            "https://ibb.co/RYsr7qJ",
-            "https://ibb.co/Tb33N3C",
-            "https://ibb.co/QYJ2DN6"
+            "https://i.ibb.co/bQCw7kG/1.jpg",
+            "https://i.ibb.co/5nHHJH7/2.jpg",
+            "https://i.ibb.co/nQwHPcD/3.jpg"
         ],
         'videos': [
             "https://youtu.be/K-LL7bmheS4?si=5_4QFo2i7uy2CZBY",
@@ -112,9 +112,9 @@ content_data = {
     },
     labels[2]: {
         'images': [
-            "https://ibb.co/BnSFT3n",
-            "https://ibb.co/k8dsdrC",
-            "https://ibb.co/4jMcFPp"
+            "https://i.ibb.co/g4Bht94/1.jpg",
+            "https://i.ibb.co/9TMkMf5/2.jpg",
+            "https://i.ibb.co/8j2Jm69/3.jpg"
         ],
         'videos': [
             "https://youtu.be/wBkl8l2fNfo?si=MPMMdhDADwdiHbpk",
