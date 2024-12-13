@@ -56,5 +56,5 @@ st.image("data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/2wCEAAkGBxITEhUTEBI
 
 # 7. 유튜브 링크 (썸네일 표시)
 st.write("유튜브 동영상 예제")
-st.video("https://www.youtube.com/watch?v=B2iAodr0fOo")
+st.video("https://www.youtube.com/watch?v=y8JsePh2kjs")
 
