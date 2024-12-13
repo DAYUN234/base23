@@ -1,60 +1,154 @@
-#기본적인 Streamlit 페이지 예제
-
-# streamlit_app.py
+#분류 결과 + 이미지 + 텍스트와 함께 분류 결과에 따라 다른 출력 보여주기
+#파일 이름 streamlit_app.py
 import streamlit as st
-import pandas as pd
+from fastai.vision.all import *
+from PIL import Image
+import gdown
 
-# 1. 제목
-st.title("이다윤의 스트림릿 서비스")
+# Google Drive 파일 ID
+file_id = '1E5FEhhIRKAKe4hJ_HkdLw6vzCbIAS4Is'
 
-# 2. 부제목
-st.subheader("다양한 서비스")
+# Google Drive에서 파일 다운로드 함수
+@st.cache(allow_output_mutation=True)
+def load_model_from_drive(file_id):
+    url = f'https://drive.google.com/uc?id={file_id}'
+    output = 'model.pkl'
+    gdown.download(url, output, quiet=False)
 
-# 3. 판다스 데이터프레임 기반 표 출력
-df = pd.DataFrame({
-    "이름": ["Alice", "Bob", "Charlie"],
-    "나이": [24, 30, 29],
-    "나라": ["Korea", "USA", "UK"]
-})
-st.write("데이터프레임 예제")
-st.dataframe(df)
+    # Fastai 모델 로드
+    learner = load_learner(output)
+    return learner
 
-# 4. HTML 활용 예제
-st.write("HTML 예제")
-st.markdown(
-    """
-    <div style="color: blue; font-size: 20px;">
-        HTML을 활용한 예시 텍스트입니다.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+def display_left_content(image, prediction, probs, labels):
+    st.write("### 왼쪽: 기존 출력 결과")
+    if image is not None:
+        st.image(image, caption="업로드된 이미지", use_column_width=True)
+    st.write(f"예측된 클래스: {prediction}")
+    st.markdown("<h4>클래스별 확률:</h4>", unsafe_allow_html=True)
+    for label, prob in zip(labels, probs):
+        st.markdown(f"""
+            <div style="background-color: #f0f0f0; border-radius: 5px; padding: 5px; margin: 5px 0;">
+                <strong style="color: #333;">{label}:</strong>
+                <div style="background-color: #d3d3d3; border-radius: 5px; width: 100%; padding: 2px;">
+                    <div style="background-color: #4CAF50; width: {prob*100}%; padding: 5px 0; border-radius: 5px; text-align: center; color: white;">
+                        {prob:.4f}
+                    </div>
+                </div>
+        """, unsafe_allow_html=True)
 
-# 5. HTML과 CSS 활용 예제
-st.write("HTML과 CSS 예제")
-st.markdown(
-    """
+def display_right_content(prediction, data):
+    st.write("### 오른쪽: 동적 분류 결과")
+    cols = st.columns(3)
+
+    # 1st Row - Images
+    for i in range(3):
+        with cols[i]:
+            st.image(data['images'][i], caption=f"이미지: {prediction}", use_column_width=True)
+    # 2nd Row - YouTube Videos
+    for i in range(3):
+        with cols[i]:
+            st.video(data['videos'][i])
+            st.caption(f"유튜브: {prediction}")
+    # 3rd Row - Text
+    for i in range(3):
+        with cols[i]:
+            st.write(data['texts'][i])
+
+# 모델 로드
+st.write("모델을 로드 중입니다. 잠시만 기다려주세요...")
+learner = load_model_from_drive(file_id)
+st.success("모델이 성공적으로 로드되었습니다!")
+
+labels = learner.dls.vocab
+
+# 스타일링을 통해 페이지 마진 줄이기
+st.markdown("""
     <style>
-    .styled-box {
-        padding: 20px;
-        margin: 5px;
-        background-color: lightgreen;
-        border-radius: 5px;
-        color: darkgreen;
+    .reportview-container .main .block-container {
+        max-width: 90%;
+        padding-top: 1rem;
+        padding-right: 1rem;
+        padding-left: 1rem;
+        padding-bottom: 1rem;
     }
     </style>
-    <div class="styled-box">
-        HTML과 CSS를 함께 사용하여 스타일링한 박스입니다.
-    </div>
-    """,
-    unsafe_allow_html=True
-)
+    """, unsafe_allow_html=True)
 
-# 6. 이미지 표시
-st.write("이미지 표시 예제")
-st.image("data:image/jpeg;base64,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", caption="Streamlit 로고")
+# 분류에 따라 다른 콘텐츠 관리
+content_data = {
+    labels[0]: {
+        'images': [
+            "https://via.placeholder.com/300?text=Label1_Image1",
+            "https://via.placeholder.com/300?text=Label1_Image2",
+            "https://via.placeholder.com/300?text=Label1_Image3"
+        ],
+        'videos': [
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ"
+        ],
+        'texts': [
+            "Label 1 관련 첫 번째 텍스트 내용입니다.",
+            "Label 1 관련 두 번째 텍스트 내용입니다.",
+            "Label 1 관련 세 번째 텍스트 내용입니다."
+        ]
+    },
+    labels[1]: {
+        'images': [
+            "https://via.placeholder.com/300?text=Label2_Image1",
+            "https://via.placeholder.com/300?text=Label2_Image2",
+            "https://via.placeholder.com/300?text=Label2_Image3"
+        ],
+        'videos': [
+            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+            "https://www.youtube.com/watch?v=2Vv-BfVoq4g"
+        ],
+        'texts': [
+            "Label 2 관련 첫 번째 텍스트 내용입니다.",
+            "Label 2 관련 두 번째 텍스트 내용입니다.",
+            "Label 2 관련 세 번째 텍스트 내용입니다."
+        ]
+    },
+    labels[2]: {
+        'images': [
+            "https://via.placeholder.com/300?text=Label3_Image1",
+            "https://via.placeholder.com/300?text=Label3_Image2",
+            "https://via.placeholder.com/300?text=Label3_Image3"
+        ],
+        'videos': [
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ",
+            "https://www.youtube.com/watch?v=2Vv-BfVoq4g",
+            "https://www.youtube.com/watch?v=3JZ_D3ELwOQ"
+        ],
+        'texts': [
+            "Label 3 관련 첫 번째 텍스트 내용입니다.",
+            "Label 3 관련 두 번째 텍스트 내용입니다.",
+            "Label 3 관련 세 번째 텍스트 내용입니다."
+        ]
+    }
+}
 
-# 7. 유튜브 링크 (썸네일 표시)
-st.write("유튜브 동영상 예제")
-st.video("https://www.youtube.com/watch?v=y8JsePh2kjs")
+# 레이아웃 설정
+left_column, right_column = st.columns([1, 2])  # 왼쪽과 오른쪽의 비율 조정
+
+# 파일 업로드 컴포넌트 (jpg, png, jpeg, webp, tiff 지원)
+uploaded_file = st.file_uploader("이미지를 업로드하세요", type=["jpg", "png", "jpeg", "webp", "tiff"])
+
+if uploaded_file is not None:
+    image = Image.open(uploaded_file)
+    img = PILImage.create(uploaded_file)
+    prediction, _, probs = learner.predict(img)
+
+    with left_column:
+        display_left_content(image, prediction, probs, labels)
+
+    with right_column:
+        # 분류 결과에 따른 콘텐츠 선택
+        data = content_data.get(prediction, {
+            'images': ["https://via.placeholder.com/300"] * 3,
+            'videos': ["https://www.youtube.com/watch?v=3JZ_D3ELwOQ"] * 3,
+            'texts': ["기본 텍스트"] * 3
+        })
+        display_right_content(prediction, data)
 
